@@ -12,7 +12,11 @@ tester.run("no-doubled-conjunctive-particle-ga", rule, {
             options: {
                 separatorChars: ["。", "?", "!", "？", "！", "．"]
             }
-        }
+        },
+        // 括弧の中の区切り文字判定
+        // https://github.com/textlint-ja/textlint-rule-no-doubled-conjunctive-particle-ga/issues/19
+        "今日は早朝から出発したが、定刻には間に合わなかった。定刻には間に合わなかったが、無事会場に到着した",
+        "「今日は早朝から出発したが、定刻には間に合わなかった。定刻には間に合わなかったが、無事会場に到着した」"
     ],
     invalid: [
         {
@@ -76,6 +80,16 @@ tester.run("no-doubled-conjunctive-particle-ga", rule, {
                     message: `文中に逆接の接続助詞 "が" が二回以上使われています。`,
                     line: 2,
                     column: 12
+                }
+            ]
+        },
+        // range
+        {
+            text: "\n今日は早朝から出発したが、定刻には間に合わなかったが、無事会場に到着した。",
+            errors: [
+                {
+                    message: `文中に逆接の接続助詞 "が" が二回以上使われています。`,
+                    range: [12, 13]
                 }
             ]
         },
